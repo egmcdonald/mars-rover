@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { TextField, Typography } from '@material-ui/core';
 
+import ButtonContainer from './components/button-container';
+
 const StyledRow = styled.div`
   display: flex;
   justify-content: space-between;
@@ -41,7 +43,14 @@ const RoverRow = ({ id }) => (
 const App = () => {
   const [rovers, setRovers] = useState([{ id: 0 }, { id: 1 }, { id: 2 }]);
 
-  return rovers.map(rover => <RoverRow key={rover.id} {...rover} />);
+  return (
+    <div>
+      <ButtonContainer />
+      {rovers.map(rover => (
+        <RoverRow key={rover.id} {...rover} />
+      ))}
+    </div>
+  );
 };
 
 export default App;
