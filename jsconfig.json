@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "checkJs": true,
+    "allowJs": true,
+    "jsx": "react",
+    "lib": ["es2018", "dom", "dom.iterable"],
+    "resolveJsonModule": true
+  },
+  "exclude": ["node_modules", "src/**/*.spec.js"]
+}
