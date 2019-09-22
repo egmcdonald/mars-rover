@@ -1,4 +1,4 @@
-import { isValidState } from './validation-utils';
+import { isValidState, isValidInstructions } from './validation-utils';
 
 describe('isValidState', () => {
   it('should return false when state is empty string', () => {
@@ -57,6 +57,47 @@ describe('isValidState', () => {
     ${'0 10 W'}
   `('should return true when state is valid (i.e. $state)', ({ state }) => {
     const actual = isValidState(state);
+
+    expect(actual).toBeTruthy();
+  });
+});
+
+describe('isValidInstructions', () => {
+  it('should return false when instructions is empty string', () => {
+    const actual = isValidInstructions('');
+
+    expect(actual).toBeFalsy();
+  });
+
+  it.each`
+    instructions
+    ${' LRM'}
+    ${'LR MR'}
+    ${'LRM '}
+  `(
+    'should return false when state contains an invalid whitespace (i.e. $instructions)',
+    ({ instructions }) => {
+      const actual = isValidInstructions(instructions);
+
+      expect(actual).toBeFalsy();
+    }
+  );
+
+  it.each`
+    instructions
+    ${'ALMR'}
+    ${'LMR0'}
+  `(
+    'should return false when instructions contains non-approved character (i.e. $instructions)',
+    ({ instructions }) => {
+      const actual = isValidInstructions(instructions);
+
+      expect(actual).toBeFalsy();
+    }
+  );
+
+  it('should return true when instructions is valid', () => {
+    const actual = isValidInstructions('LMRLMR');
 
     expect(actual).toBeTruthy();
   });
