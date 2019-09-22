@@ -4,6 +4,8 @@ import { TextField, Typography } from '@material-ui/core';
 
 import ButtonContainer from './components/button-container';
 
+const MAX_ROVERS = 10;
+
 const StyledRow = styled.div`
   display: flex;
   justify-content: space-between;
@@ -40,12 +42,28 @@ const RoverRow = ({ id }) => (
   </StyledRow>
 );
 
+export const removeRover = rovers => [...rovers.slice(0, rovers.length - 1)];
+
+export const addRover = rovers => [
+  ...rovers,
+  { id: rovers[rovers.length - 1].id + 1 }
+];
+
 const App = () => {
-  const [rovers, setRovers] = useState([{ id: 0 }, { id: 1 }, { id: 2 }]);
+  const [rovers, setRovers] = useState([{ id: 0 }]);
 
   return (
     <div>
-      <ButtonContainer />
+      <ButtonContainer
+        onRemoveButtonClick={() => {
+          setRovers(removeRover(rovers));
+        }}
+        isRemoveButtonDisabled={rovers.length === 1}
+        onAddButtonClick={() => {
+          setRovers(addRover(rovers));
+        }}
+        isAddButtonDisabled={rovers.length === MAX_ROVERS}
+      />
       {rovers.map(rover => (
         <RoverRow key={rover.id} {...rover} />
       ))}

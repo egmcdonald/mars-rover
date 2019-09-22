@@ -8,10 +8,19 @@ const ButtonContainerWrapper = styled.div`
   justify-content: center;
 `;
 
-const ButtonContainer = () => (
+const ButtonContainer = ({
+  onRemoveButtonClick,
+  isRemoveButtonDisabled,
+  onAddButtonClick,
+  isAddButtonDisabled
+}) => (
   <ButtonContainerWrapper>
-    <Button>Remove a rover!</Button>
-    <Button>Add a rover!</Button>
+    <Button onClick={onRemoveButtonClick} disabled={isRemoveButtonDisabled}>
+      Remove a rover!
+    </Button>
+    <Button onClick={onAddButtonClick} disabled={isAddButtonDisabled}>
+      Add a rover!
+    </Button>
   </ButtonContainerWrapper>
 );
 
