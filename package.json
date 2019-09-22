@@ -1,0 +1,17 @@
+{
+  "name": "mars-rover",
+  "description": "A simple NodeJS/React app to simulate the Mars Rover solution",
+  "license": "ISC",
+  "author": "Em McDonald",
+  "homepage": "https://github.com/egmcdonald/mars-rover#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/egmcdonald/mars-rover.git"
+  },
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
