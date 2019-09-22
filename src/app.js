@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { TextField, Typography } from '@material-ui/core';
 
@@ -14,9 +14,9 @@ const StyledRow = styled.div`
   }
 `;
 
-const App = () => (
+const RoverRow = ({ id }) => (
   <StyledRow>
-    <Typography variant="h4">Rover A</Typography>
+    <Typography variant="h4">Rover {id}</Typography>
     <TextField
       label="Start state"
       placeholder="e.g. 1 2 N"
@@ -37,5 +37,11 @@ const App = () => (
     />
   </StyledRow>
 );
+
+const App = () => {
+  const [rovers, setRovers] = useState([{ id: 0 }, { id: 1 }, { id: 2 }]);
+
+  return rovers.map(rover => <RoverRow key={rover.id} {...rover} />);
+};
 
 export default App;
