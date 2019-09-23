@@ -1,4 +1,9 @@
 /**
+ * @param {string} str
+ */
+export const isValidZeroedString = str => str && str.match(/^(0|[1-9]\d*)$/);
+
+/**
  * @param {string} state
  */
 export const isValidState = state =>

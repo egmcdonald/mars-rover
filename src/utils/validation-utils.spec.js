@@ -1,8 +1,41 @@
 import {
+  isValidZeroedString,
   isValidState,
   isValidInstructions,
   isValidGridBoundary
 } from './validation-utils';
+
+describe('isValidZeroedString', () => {
+  it('should return false when string is empty string', () => {
+    const actual = isValidZeroedString('');
+
+    expect(actual).toBeFalsy();
+  });
+
+  it.each`
+    str
+    ${'00'}
+    ${'01'}
+  `(
+    'should return false when string starts with invalid zero (i.e. $str)',
+    ({ str }) => {
+      const actual = isValidZeroedString(str);
+
+      expect(actual).toBeFalsy();
+    }
+  );
+
+  it.each`
+    str
+    ${'0'}
+    ${'10'}
+    ${'101'}
+  `('should return true when string is valid (i.e. $str)', ({ str }) => {
+    const actual = isValidZeroedString(str);
+
+    expect(actual).toBeTruthy();
+  });
+});
 
 describe('isValidState', () => {
   it('should return false when state is empty string', () => {
@@ -46,6 +79,19 @@ describe('isValidState', () => {
     ${'0 -1 N'}
   `(
     'should return false when state contains a coordinate off the grid (i.e. $state)',
+    ({ state }) => {
+      const actual = isValidState(state);
+
+      expect(actual).toBeFalsy();
+    }
+  );
+
+  it.each`
+    state
+    ${'0 00 N'}
+    ${'00 0 N'}
+  `(
+    'should return false when state contains an all-zeroed string with length greater than 1 (i.e. $state)',
     ({ state }) => {
       const actual = isValidState(state);
 
