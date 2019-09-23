@@ -56,11 +56,11 @@ This input field is responsible for setting the upper X and upper Y coordinates 
 
 ### **Remove a rover!** button
 
-This button will remove a rover from the end of the input list. It will be `disabled` once there is only one rover left in the list.
+This button will remove a rover from the end of the input list. It will be `disabled` once there is only 1 rover left in the list.
 
 ### **Add a rover!** button
 
-This button will add a new blank rover to the end input list. It will be `disabled` once there are ten rovers in the input list.
+This button will add a new blank rover to the end input list. It will be `disabled` once there are 10 rovers in the input list.
 
 ### **Rover \#** heading (per rover)
 
@@ -72,7 +72,7 @@ This input field is responsible for setting the starting state of the rover. Thi
 
 ### **Instructions to rove** input field (per rover)
 
-This input field is responsible for setting the course of the rover. This must be a non-empty string with no whitespace, consisting of any combination of `"L"` (left), `"R"` (right), and `"M"` (move one cell in current bearing direction). This field will error if all of the previously mentioned conditions are not met.
+This input field is responsible for setting the course of the rover. This must be a non-empty string with no whitespace, consisting of any combination of `"L"` (left), `"R"` (right), and `"M"` (move one cell in current bearing direction). This string must not exceed 20 characters. This field will error if all of the previously mentioned conditions are not met.
 
 ### **End state** text field (per rover)
 
