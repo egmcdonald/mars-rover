@@ -1,6 +1,6 @@
 import {
   isValidZeroedString,
-  isValidState,
+  isValidStateString,
   isValidInstructions,
   isValidGridBoundary
 } from './validation-utils';
@@ -37,9 +37,9 @@ describe('isValidZeroedString', () => {
   });
 });
 
-describe('isValidState', () => {
+describe('isValidStateString', () => {
   it('should return false when state is empty string', () => {
-    const actual = isValidState('');
+    const actual = isValidStateString('');
 
     expect(actual).toBeFalsy();
   });
@@ -53,7 +53,7 @@ describe('isValidState', () => {
   `(
     'should return false when state contains an invalid whitespace (i.e. $state)',
     ({ state }) => {
-      const actual = isValidState(state);
+      const actual = isValidStateString(state);
 
       expect(actual).toBeFalsy();
     }
@@ -67,7 +67,7 @@ describe('isValidState', () => {
   `(
     'should return false when state contains an invalid value (i.e. $state)',
     ({ state }) => {
-      const actual = isValidState(state);
+      const actual = isValidStateString(state);
 
       expect(actual).toBeFalsy();
     }
@@ -80,7 +80,7 @@ describe('isValidState', () => {
   `(
     'should return false when state contains a coordinate off the grid (i.e. $state)',
     ({ state }) => {
-      const actual = isValidState(state);
+      const actual = isValidStateString(state);
 
       expect(actual).toBeFalsy();
     }
@@ -93,7 +93,7 @@ describe('isValidState', () => {
   `(
     'should return false when state contains an all-zeroed string with length greater than 1 (i.e. $state)',
     ({ state }) => {
-      const actual = isValidState(state);
+      const actual = isValidStateString(state);
 
       expect(actual).toBeFalsy();
     }
@@ -106,7 +106,7 @@ describe('isValidState', () => {
     ${'10 0 S'}
     ${'0 10 W'}
   `('should return true when state is valid (i.e. $state)', ({ state }) => {
-    const actual = isValidState(state);
+    const actual = isValidStateString(state);
 
     expect(actual).toBeTruthy();
   });

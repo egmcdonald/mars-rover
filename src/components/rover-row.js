@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { TextField, Typography } from '@material-ui/core';
 
-import { isValidState, isValidInstructions } from '../utils/validation-utils';
+import {
+  isValidStateString,
+  isValidInstructions
+} from '../utils/validation-utils';
 import { calculateEndState } from '../utils/rover-utils';
 
 const StyledRow = styled.div`
@@ -28,7 +31,7 @@ export function onStartStateChangeHandler({
   setStartState,
   gridBoundary
 }) {
-  if (isValidState(startStateString)) {
+  if (isValidStateString(startStateString)) {
     const [x, y, bearing] = startStateString.split(' ');
     const parsedState = { x: parseInt(x), y: parseInt(y), bearing };
     setStartState(
