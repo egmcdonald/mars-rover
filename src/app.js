@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
-import ButtonContainer from './components/button-container';
+import ControlsBar from './components/controls-bar';
 import RoverRow from './components/rover-row';
+import { isValidGridBoundary } from './utils/validation-utils';
 
 const MAX_ROVERS = 10;
 
@@ -14,10 +15,21 @@ export const addRover = rovers => [
 
 const App = () => {
   const [rovers, setRovers] = useState([{ id: 0 }]);
+  const [gridBoundary, setGridBoundary] = useState(null);
 
   return (
     <div>
-      <ButtonContainer
+      <ControlsBar
+        onGridBoundaryChanged={e => {
+          const gridString = e.target.value;
+          if (isValidGridBoundary(gridString)) {
+            const [x, y] = gridString.split(' ');
+            setGridBoundary({ x: parseInt(x), y: parseInt(y) });
+          } else {
+            setGridBoundary(null);
+          }
+        }}
+        isGridBoundaryStringValid={!!gridBoundary}
         onRemoveButtonClick={() => {
           setRovers(removeRover(rovers));
         }}
