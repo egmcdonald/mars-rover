@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { TextField, Typography } from '@material-ui/core';
 
@@ -17,10 +17,20 @@ const StyledRow = styled.div`
 `;
 
 export default function RoverRow({ id }) {
-  const [isStartStateStringValid, setIsStartStateStringValid] = useState(true);
+  const [isStartStateStringValid, setIsStartStateStringValid] = useState(false);
   const [isInstructionsStringValid, setIsInstructionsStringValid] = useState(
-    true
+    false
   );
+  const [endState, setEndState] = useState('');
+
+  useEffect(() => {
+    setEndState(
+      (isStartStateStringValid &&
+        isInstructionsStringValid &&
+        'Ready to be calculated') ||
+        ''
+    );
+  }, [isStartStateStringValid, isInstructionsStringValid]);
 
   return (
     <StyledRow>
@@ -43,7 +53,8 @@ export default function RoverRow({ id }) {
       />
       <TextField
         label="End state"
-        value="3 4 S"
+        value={endState}
+        error={!endState}
         helperText="Space-separated values: X Y BEARING"
         InputProps={{
           readOnly: true
