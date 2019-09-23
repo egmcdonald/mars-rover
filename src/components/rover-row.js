@@ -4,7 +4,8 @@ import { TextField, Typography } from '@material-ui/core';
 
 import {
   isValidStateString,
-  isValidInstructions
+  isValidInstructions,
+  isValidState
 } from '../utils/validation-utils';
 import { calculateEndState } from '../utils/rover-utils';
 
@@ -35,10 +36,7 @@ export function onStartStateChangeHandler({
     const [x, y, bearing] = startStateString.split(' ');
     const parsedState = { x: parseInt(x), y: parseInt(y), bearing };
     setStartState(
-      (gridBoundary &&
-        parsedState.x <= gridBoundary.x &&
-        parsedState.y <= gridBoundary.y &&
-        parsedState) ||
+      (isValidState({ state: parsedState, gridBoundary }) && parsedState) ||
         null
     );
   } else {
@@ -109,7 +107,7 @@ export default function RoverRow({ id, gridBoundary }) {
         value={
           (endState && `${endState.x} ${endState.y} ${endState.bearing}`) || ''
         }
-        error={!endState}
+        error={!endState || !isValidState({ state: endState, gridBoundary })}
         helperText="Space-separated values: X Y BEARING"
         InputProps={{
           readOnly: true
