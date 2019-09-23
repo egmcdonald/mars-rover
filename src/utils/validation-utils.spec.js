@@ -1,4 +1,8 @@
-import { isValidState, isValidInstructions } from './validation-utils';
+import {
+  isValidState,
+  isValidInstructions,
+  isValidGridBoundary
+} from './validation-utils';
 
 describe('isValidState', () => {
   it('should return false when state is empty string', () => {
@@ -101,4 +105,67 @@ describe('isValidInstructions', () => {
 
     expect(actual).toBeTruthy();
   });
+});
+
+describe('isValidGridBoundary', () => {
+  it('should return false when grid boundary is empty string', () => {
+    const actual = isValidGridBoundary('');
+
+    expect(actual).toBeFalsy();
+  });
+
+  it.each`
+    boundary
+    ${' 5 5'}
+    ${'5  5'}
+    ${'5 5 '}
+  `(
+    'should return false when grid boundary contains an invalid whitespace (i.e. $boundary)',
+    ({ boundary }) => {
+      const actual = isValidGridBoundary(boundary);
+
+      expect(actual).toBeFalsy();
+    }
+  );
+
+  it.each`
+    boundary
+    ${'A 5'}
+    ${'5 A'}
+  `(
+    'should return false when grid boundary contains non-approved character (i.e. $boundary)',
+    ({ boundary }) => {
+      const actual = isValidGridBoundary(boundary);
+
+      expect(actual).toBeFalsy();
+    }
+  );
+
+  it.each`
+    boundary
+    ${'-1 5'}
+    ${'5 -1'}
+  `(
+    'should return false when grid boundary contains a coordinate off the grid (i.e. $boundary)',
+    ({ boundary }) => {
+      const actual = isValidGridBoundary(boundary);
+
+      expect(actual).toBeFalsy();
+    }
+  );
+
+  it.each`
+    boundary
+    ${'5 5'}
+    ${'10 5'}
+    ${'5 10'}
+    ${'10 10'}
+  `(
+    'should return true when grid boundary is valid (i.e. $boundary)',
+    ({ boundary }) => {
+      const actual = isValidGridBoundary(boundary);
+
+      expect(actual).toBeTruthy();
+    }
+  );
 });

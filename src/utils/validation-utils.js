@@ -3,3 +3,6 @@ export const isValidState = state =>
 
 export const isValidInstructions = instructions =>
   instructions && instructions.match(/^[L|R|M]+$/);
+
+export const isValidGridBoundary = boundary =>
+  boundary && boundary.match(/^\d+\s\d+$/);
