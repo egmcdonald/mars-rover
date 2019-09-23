@@ -1,4 +1,7 @@
-import { onStartStateChangeHandler } from './rover-row';
+import {
+  onStartStateChangeHandler,
+  onInstructionsChangeHandler
+} from './rover-row';
 
 describe('onStartStateChangeHandler', () => {
   let setStartStateMock;
@@ -60,5 +63,38 @@ describe('onStartStateChangeHandler', () => {
       y: 0,
       bearing: 'N'
     });
+  });
+});
+
+describe('onInstructionsChangeHandler', () => {
+  let setInstructionsMock;
+
+  const defaultParams = {
+    instructionsString: 'LMR'
+  };
+
+  beforeEach(() => {
+    setInstructionsMock = jest.fn();
+
+    defaultParams.setInstructions = setInstructionsMock;
+  });
+
+  afterEach(() => {
+    setInstructionsMock.mockReset();
+  });
+
+  it('should set instructions to null when instructions string is invalid', () => {
+    onInstructionsChangeHandler({
+      ...defaultParams,
+      instructionsString: 'foo'
+    });
+
+    expect(setInstructionsMock).toHaveBeenCalledWith(null);
+  });
+
+  it('should set instructions when given valid params', () => {
+    onInstructionsChangeHandler(defaultParams);
+
+    expect(setInstructionsMock).toHaveBeenCalledWith('LMR');
   });
 });

@@ -44,6 +44,19 @@ export function onStartStateChangeHandler({
 }
 
 /**
+ * @param {Object} params
+ * @param {string} params.instructionsString
+ * @param {(arg0: string) => void} params.setInstructions
+ */
+export const onInstructionsChangeHandler = ({
+  instructionsString,
+  setInstructions
+}) =>
+  setInstructions(
+    isValidInstructions(instructionsString) ? instructionsString : null
+  );
+
+/**
  * @param {Object} props
  * @param {number} props.id
  * @param {{x: number, y: number}} props.gridBoundary
@@ -81,14 +94,12 @@ export default function RoverRow({ id, gridBoundary }) {
         placeholder="e.g. LMRLMR"
         helperText="L for Left, R for Right, M for Move"
         error={!instructions}
-        onChange={e => {
-          const instructionsString = e.target.value;
-          if (isValidInstructions(instructionsString)) {
-            setInstructions(instructionsString);
-          } else {
-            setInstructions(null);
-          }
-        }}
+        onChange={e =>
+          onInstructionsChangeHandler({
+            instructionsString: e.target.value,
+            setInstructions
+          })
+        }
       />
       <TextField
         label="End state"
