@@ -47,7 +47,7 @@ describe('isValidState', () => {
   `(
     'should return false when state contains a coordinate off the grid (i.e. $state)',
     ({ state }) => {
-      const actual = isValidState(state, { maxX: 5, maxY: 5 });
+      const actual = isValidState(state);
 
       expect(actual).toBeFalsy();
     }
