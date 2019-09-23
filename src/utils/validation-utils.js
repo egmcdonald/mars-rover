@@ -25,7 +25,7 @@ export const isValidInstructions = instructions =>
 /**
  * @param {string} boundary
  */
-export const isValidGridBoundary = boundary => {
+export const isValidGridBoundaryString = boundary => {
   const valid = boundary && boundary.match(/^\d+\s\d+$/);
   const splitValid = valid && boundary.split(' ');
   return (

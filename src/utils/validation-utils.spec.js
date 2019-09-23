@@ -2,7 +2,7 @@ import {
   isValidZeroedString,
   isValidStateString,
   isValidInstructions,
-  isValidGridBoundary,
+  isValidGridBoundaryString,
   isValidState
 } from './validation-utils';
 
@@ -168,9 +168,9 @@ describe('isValidInstructions', () => {
   );
 });
 
-describe('isValidGridBoundary', () => {
+describe('isValidGridBoundaryString', () => {
   it('should return false when grid boundary is empty string', () => {
-    const actual = isValidGridBoundary('');
+    const actual = isValidGridBoundaryString('');
 
     expect(actual).toBeFalsy();
   });
@@ -183,7 +183,7 @@ describe('isValidGridBoundary', () => {
   `(
     'should return false when grid boundary contains an invalid whitespace (i.e. $boundary)',
     ({ boundary }) => {
-      const actual = isValidGridBoundary(boundary);
+      const actual = isValidGridBoundaryString(boundary);
 
       expect(actual).toBeFalsy();
     }
@@ -196,7 +196,7 @@ describe('isValidGridBoundary', () => {
   `(
     'should return false when grid boundary contains non-approved character (i.e. $boundary)',
     ({ boundary }) => {
-      const actual = isValidGridBoundary(boundary);
+      const actual = isValidGridBoundaryString(boundary);
 
       expect(actual).toBeFalsy();
     }
@@ -209,7 +209,7 @@ describe('isValidGridBoundary', () => {
   `(
     'should return false when grid boundary contains a coordinate off the grid (i.e. $boundary)',
     ({ boundary }) => {
-      const actual = isValidGridBoundary(boundary);
+      const actual = isValidGridBoundaryString(boundary);
 
       expect(actual).toBeFalsy();
     }
@@ -222,7 +222,7 @@ describe('isValidGridBoundary', () => {
   `(
     'should return false when grid boundary contains an all-zeroed coordinate with length greater than 1 (i.e. $boundary)',
     ({ boundary }) => {
-      const actual = isValidGridBoundary(boundary);
+      const actual = isValidGridBoundaryString(boundary);
 
       expect(actual).toBeFalsy();
     }
@@ -237,7 +237,7 @@ describe('isValidGridBoundary', () => {
   `(
     'should return true when grid boundary is valid (i.e. $boundary)',
     ({ boundary }) => {
-      const actual = isValidGridBoundary(boundary);
+      const actual = isValidGridBoundaryString(boundary);
 
       expect(actual).toBeTruthy();
     }
