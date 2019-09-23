@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { TextField, Typography } from '@material-ui/core';
 
 import { isValidState, isValidInstructions } from '../utils/validation-utils';
+import { calculateEndState } from '../utils/rover-utils';
 
 const StyledRow = styled.div`
   display: flex;
@@ -23,7 +24,11 @@ export default function RoverRow({ id, gridBoundary }) {
 
   useEffect(() => {
     const endStateCanBeCalculated = startState && instructions;
-    setEndState(endStateCanBeCalculated ? 'Ready to be calculated' : '');
+    setEndState(
+      endStateCanBeCalculated
+        ? calculateEndState({ startState, instructions })
+        : ''
+    );
   }, [startState, instructions]);
 
   return (
