@@ -40,7 +40,7 @@ const App = () => {
         isAddButtonDisabled={rovers.length === MAX_ROVERS}
       />
       {rovers.map(rover => (
-        <RoverRow key={rover.id} {...rover} />
+        <RoverRow key={rover.id} gridBoundary={gridBoundary} {...rover} />
       ))}
     </div>
   );

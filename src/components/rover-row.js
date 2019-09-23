@@ -16,7 +16,7 @@ const StyledRow = styled.div`
   }
 `;
 
-export default function RoverRow({ id }) {
+export default function RoverRow({ id, gridBoundary }) {
   const [startState, setStartState] = useState(null);
   const [instructions, setInstructions] = useState(null);
   const [endState, setEndState] = useState('');
@@ -38,7 +38,13 @@ export default function RoverRow({ id }) {
           const stateString = e.target.value;
           if (isValidState(stateString)) {
             const [x, y, bearing] = stateString.split(' ');
-            setStartState({ x: parseInt(x), y: parseInt(y), bearing });
+            const parsedState = { x: parseInt(x), y: parseInt(y), bearing };
+            setStartState(
+              gridBoundary &&
+                parsedState.x <= gridBoundary.x &&
+                parsedState.y <= gridBoundary.y &&
+                parsedState
+            );
           } else {
             setStartState(null);
           }
