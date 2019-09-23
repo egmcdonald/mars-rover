@@ -17,6 +17,11 @@ const StyledRow = styled.div`
   }
 `;
 
+/**
+ * @param {Object} props
+ * @param {number} props.id
+ * @param {{x: number, y: number}} props.gridBoundary
+ */
 export default function RoverRow({ id, gridBoundary }) {
   const [startState, setStartState] = useState(null);
   const [instructions, setInstructions] = useState(null);

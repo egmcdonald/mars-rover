@@ -6,8 +6,19 @@ import { isValidGridBoundary } from './utils/validation-utils';
 
 const MAX_ROVERS = 10;
 
+/**
+ * @typedef {Object} Rover
+ * @property {number} id
+ */
+
+/**
+ * @param {Rover[]} rovers
+ */
 export const removeRover = rovers => [...rovers.slice(0, rovers.length - 1)];
 
+/**
+ * @param {Rover[]} rovers
+ */
 export const addRover = rovers => [
   ...rovers,
   { id: rovers[rovers.length - 1].id + 1 }

@@ -19,6 +19,12 @@ const DIRECTIONS = {
 
 const BEARINGS = Object.keys(DIRECTIONS);
 
+/**
+ * @param {Object} params
+ * @param {string} params.bearing
+ * @param {number} params.x
+ * @param {number} params.y
+ */
 export function move({ bearing, x, y }) {
   const { x: xToMove, y: yToMove } = DIRECTIONS[bearing];
   return {
@@ -27,17 +33,27 @@ export function move({ bearing, x, y }) {
   };
 }
 
+/**
+ * @param {Object} params
+ * @param {string} params.spinDirection
+ * @param {string} params.startBearing
+ */
 export function spin({ spinDirection, startBearing }) {
   const indexOfPreviousBearing = BEARINGS.findIndex(
     compassPoint => compassPoint === startBearing
   );
-  const newBearing =
+  return BEARINGS[
     spinDirection === 'L'
       ? (indexOfPreviousBearing + 4 - 1) % 4
-      : (indexOfPreviousBearing + 1) % 4;
-  return BEARINGS[newBearing];
+      : (indexOfPreviousBearing + 1) % 4
+  ];
 }
 
+/**
+ * @param {Object} params
+ * @param {{x: number, y: number, bearing: string}} params.startState
+ * @param {string} params.instructions
+ */
 export const calculateEndState = ({ startState, instructions }) =>
   instructions.split('').reduce((current, instruction) => {
     return instruction === 'M'
