@@ -27,3 +27,16 @@ export const isValidInstructions = instructions =>
  */
 export const isValidGridBoundary = boundary =>
   boundary && boundary.match(/^\d+\s\d+$/);
+
+/**
+ * @param {Object} params
+ * @param {{x: number, y: number}} params.state
+ * @param {{x: number, y: number}} params.gridBoundary
+ */
+export const isValidState = ({ state, gridBoundary }) =>
+  state &&
+  gridBoundary &&
+  state.x >= 0 &&
+  state.x <= gridBoundary.x &&
+  state.y >= 0 &&
+  state.y <= gridBoundary.y;

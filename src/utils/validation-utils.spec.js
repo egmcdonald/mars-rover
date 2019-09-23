@@ -2,7 +2,8 @@ import {
   isValidZeroedString,
   isValidStateString,
   isValidInstructions,
-  isValidGridBoundary
+  isValidGridBoundary,
+  isValidState
 } from './validation-utils';
 
 describe('isValidZeroedString', () => {
@@ -210,6 +211,39 @@ describe('isValidGridBoundary', () => {
     'should return true when grid boundary is valid (i.e. $boundary)',
     ({ boundary }) => {
       const actual = isValidGridBoundary(boundary);
+
+      expect(actual).toBeTruthy();
+    }
+  );
+});
+
+describe('isValidState', () => {
+  const gridBoundary = { x: 5, y: 5 };
+
+  it.each`
+    state
+    ${{ x: 6, y: 0 }}
+    ${{ x: 0, y: 6 }}
+    ${{ x: -1, y: 0 }}
+    ${{ x: 0, y: -1 }}
+  `(
+    'should return false when state exceeds the boundary (i.e. $state)',
+    ({ state }) => {
+      const actual = isValidState({ state, gridBoundary });
+
+      expect(actual).toBeFalsy();
+    }
+  );
+
+  it.each`
+    state
+    ${{ x: 0, y: 5 }}
+    ${{ x: 5, y: 0 }}
+    ${{ x: 3, y: 3 }}
+  `(
+    'should return true when state does not exceed the boundary (i.e. $state)',
+    ({ state }) => {
+      const actual = isValidState({ state, gridBoundary });
 
       expect(actual).toBeTruthy();
     }
