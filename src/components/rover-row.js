@@ -18,6 +18,32 @@ const StyledRow = styled.div`
 `;
 
 /**
+ * @param {Object} params
+ * @param {string} params.startStateString
+ * @param {(arg0: {x: number, y: number, bearing: string}) => void} params.setStartState
+ * @param {{x: number, y: number}} params.gridBoundary
+ */
+export function onStartStateChangeHandler({
+  startStateString,
+  setStartState,
+  gridBoundary
+}) {
+  if (isValidState(startStateString)) {
+    const [x, y, bearing] = startStateString.split(' ');
+    const parsedState = { x: parseInt(x), y: parseInt(y), bearing };
+    setStartState(
+      (gridBoundary &&
+        parsedState.x <= gridBoundary.x &&
+        parsedState.y <= gridBoundary.y &&
+        parsedState) ||
+        null
+    );
+  } else {
+    setStartState(null);
+  }
+}
+
+/**
  * @param {Object} props
  * @param {number} props.id
  * @param {{x: number, y: number}} props.gridBoundary
@@ -42,21 +68,13 @@ export default function RoverRow({ id, gridBoundary }) {
         placeholder="e.g. 1 2 N"
         helperText="Space-separated values: X Y BEARING"
         error={!startState}
-        onChange={e => {
-          const stateString = e.target.value;
-          if (isValidState(stateString)) {
-            const [x, y, bearing] = stateString.split(' ');
-            const parsedState = { x: parseInt(x), y: parseInt(y), bearing };
-            setStartState(
-              gridBoundary &&
-                parsedState.x <= gridBoundary.x &&
-                parsedState.y <= gridBoundary.y &&
-                parsedState
-            );
-          } else {
-            setStartState(null);
-          }
-        }}
+        onChange={e =>
+          onStartStateChangeHandler({
+            startStateString: e.target.value,
+            setStartState,
+            gridBoundary
+          })
+        }
       />
       <TextField
         label="Instructions to rove"
