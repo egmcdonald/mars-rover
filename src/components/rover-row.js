@@ -17,20 +17,14 @@ const StyledRow = styled.div`
 `;
 
 export default function RoverRow({ id }) {
-  const [isStartStateStringValid, setIsStartStateStringValid] = useState(false);
-  const [isInstructionsStringValid, setIsInstructionsStringValid] = useState(
-    false
-  );
+  const [startState, setStartState] = useState(null);
+  const [instructions, setInstructions] = useState(null);
   const [endState, setEndState] = useState('');
 
   useEffect(() => {
-    setEndState(
-      (isStartStateStringValid &&
-        isInstructionsStringValid &&
-        'Ready to be calculated') ||
-        ''
-    );
-  }, [isStartStateStringValid, isInstructionsStringValid]);
+    const endStateCanBeCalculated = startState && instructions;
+    setEndState(endStateCanBeCalculated ? 'Ready to be calculated' : '');
+  }, [startState, instructions]);
 
   return (
     <StyledRow>
@@ -39,17 +33,30 @@ export default function RoverRow({ id }) {
         label="Start state"
         placeholder="e.g. 1 2 N"
         helperText="Space-separated values: X Y BEARING"
-        error={!isStartStateStringValid}
-        onChange={e => setIsStartStateStringValid(isValidState(e.target.value))}
+        error={!startState}
+        onChange={e => {
+          const stateString = e.target.value;
+          if (isValidState(stateString)) {
+            const [x, y, bearing] = stateString.split(' ');
+            setStartState({ x: parseInt(x), y: parseInt(y), bearing });
+          } else {
+            setStartState(null);
+          }
+        }}
       />
       <TextField
         label="Instructions to rove"
         placeholder="e.g. LMRLMR"
         helperText="L for Left, R for Right, M for Move"
-        error={!isInstructionsStringValid}
-        onChange={e =>
-          setIsInstructionsStringValid(isValidInstructions(e.target.value))
-        }
+        error={!instructions}
+        onChange={e => {
+          const instructionsString = e.target.value;
+          if (isValidInstructions(instructionsString)) {
+            setInstructions(instructionsString);
+          } else {
+            setInstructions(null);
+          }
+        }}
       />
       <TextField
         label="End state"
