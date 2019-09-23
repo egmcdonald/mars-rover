@@ -38,4 +38,15 @@ export function spin({ spinDirection, startBearing }) {
   return BEARINGS[newBearing];
 }
 
-export const calculateEndState = () => 'Ready to be calculated';
+export const calculateEndState = ({ startState, instructions }) =>
+  instructions.split('').reduce((current, instruction) => {
+    return instruction === 'M'
+      ? { ...current, ...move(current) }
+      : {
+          ...current,
+          bearing: spin({
+            spinDirection: instruction,
+            startBearing: current.bearing
+          })
+        };
+  }, startState);
