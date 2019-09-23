@@ -20,14 +20,12 @@ const StyledRow = styled.div`
 export default function RoverRow({ id, gridBoundary }) {
   const [startState, setStartState] = useState(null);
   const [instructions, setInstructions] = useState(null);
-  const [endState, setEndState] = useState('');
+  const [endState, setEndState] = useState(null);
 
   useEffect(() => {
     const endStateCanBeCalculated = startState && instructions;
     setEndState(
-      endStateCanBeCalculated
-        ? calculateEndState({ startState, instructions })
-        : ''
+      endStateCanBeCalculated && calculateEndState({ startState, instructions })
     );
   }, [startState, instructions]);
 
@@ -71,7 +69,9 @@ export default function RoverRow({ id, gridBoundary }) {
       />
       <TextField
         label="End state"
-        value={endState}
+        value={
+          (endState && `${endState.x} ${endState.y} ${endState.bearing}`) || ''
+        }
         error={!endState}
         helperText="Space-separated values: X Y BEARING"
         InputProps={{
