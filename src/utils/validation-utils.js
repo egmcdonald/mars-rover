@@ -6,8 +6,15 @@ export const isValidZeroedString = str => str && str.match(/^(0|[1-9]\d*)$/);
 /**
  * @param {string} state
  */
-export const isValidState = state =>
-  state && state.match(/^\d+\s\d+\s[N|E|S|W]$/);
+export const isValidState = state => {
+  const valid = state && state.match(/^\d+\s\d+\s[N|E|S|W]$/);
+  const splitValid = valid && state.split(' ');
+  return (
+    valid &&
+    isValidZeroedString(splitValid[0]) &&
+    isValidZeroedString(splitValid[1])
+  );
+};
 
 /**
  * @param {string} instructions
