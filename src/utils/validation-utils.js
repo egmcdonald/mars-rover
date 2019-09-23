@@ -20,7 +20,7 @@ export const isValidStateString = state => {
  * @param {string} instructions
  */
 export const isValidInstructions = instructions =>
-  instructions && instructions.match(/^[L|R|M]+$/);
+  instructions && instructions.match(/^[L|R|M]+$/) && instructions.length <= 20;
 
 /**
  * @param {string} boundary

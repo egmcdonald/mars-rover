@@ -120,6 +120,12 @@ describe('isValidInstructions', () => {
     expect(actual).toBeFalsy();
   });
 
+  it('should return false when instructions exceed 20 chars', () => {
+    const actual = isValidInstructions('LMRLMRLMRLMRLMRLMRLMR');
+
+    expect(actual).toBeFalsy();
+  });
+
   it.each`
     instructions
     ${' LRM'}
@@ -147,11 +153,19 @@ describe('isValidInstructions', () => {
     }
   );
 
-  it('should return true when instructions is valid', () => {
-    const actual = isValidInstructions('LMRLMR');
+  it.each`
+    instructions
+    ${'L'}
+    ${'LMRLMR'}
+    ${'LMRLMRLMRLMRLMRLMRLM'}
+  `(
+    'should return true when instructions is valid (i.e. $instructions)',
+    ({ instructions }) => {
+      const actual = isValidInstructions(instructions);
 
-    expect(actual).toBeTruthy();
-  });
+      expect(actual).toBeTruthy();
+    }
+  );
 });
 
 describe('isValidGridBoundary', () => {
