@@ -217,6 +217,19 @@ describe('isValidGridBoundary', () => {
 
   it.each`
     boundary
+    ${'0 00'}
+    ${'00 0'}
+  `(
+    'should return false when grid boundary contains an all-zeroed coordinate with length greater than 1 (i.e. $boundary)',
+    ({ boundary }) => {
+      const actual = isValidGridBoundary(boundary);
+
+      expect(actual).toBeFalsy();
+    }
+  );
+
+  it.each`
+    boundary
     ${'5 5'}
     ${'10 5'}
     ${'5 10'}
